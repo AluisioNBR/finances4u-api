@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common'
-import { ConfigModule, ConfigService } from '@nestjs/config'
+import { ConfigModule } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
 import { BlocksModule } from './blocks.module'
 import { GoalsModule } from './goals.module'
@@ -8,14 +8,15 @@ import { SignModule } from './sign.module'
 import { SupportModule } from './support.module'
 import { TransactionsModule } from './transactions.module'
 import { UserModule } from './user.module'
+import { config } from 'dotenv'
 
-const configService = new ConfigService()
-const clusterUser = configService.get<string>('CLUSTER_USER')
-const clusterPassword = configService.get<string>('CLUSTER_PASSWORD')
-const cluster = configService.get<string>('CLUSTER')
+config()
 
 @Module({
 	imports: [
+		ConfigModule.forRoot({
+			isGlobal: true,
+		}),
 		UserModule,
 		SignModule,
 		TransactionsModule,
@@ -24,12 +25,9 @@ const cluster = configService.get<string>('CLUSTER')
 		SupportModule,
 		MongooseModule.forRootAsync({
 			useFactory: () => ({
-				uri: `mongodb+srv://${clusterUser}:${clusterPassword}@${cluster}/finances4u?retryWrites=true&w=majority`,
+				uri: `mongodb+srv://${process.env.CLUSTER_USER}:${process.env.CLUSTER_PASSWORD}@${process.env.CLUSTER}/finances4u`,
 				dbName: 'finances4u',
 			}),
-		}),
-		ConfigModule.forRoot({
-			isGlobal: true,
 		}),
 	],
 })
