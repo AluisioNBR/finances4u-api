@@ -1,40 +1,23 @@
+import { config } from 'dotenv'
+import express from 'express'
+import mongoose from 'mongoose'
+import { SignController } from './controllers/sign.controller'
 
-import express from 'express';
+var app = express()
 
-var app = express();
+app.use('', SignController)
 
-const users = [
-  {
-      id: 1,
-      name: "Lucas"
-  },
-  {
-      id: 2,
-      name: "Eric"
-  },
-  {
-      id: 3,
-      name: "Ana"
-  },
-];
+config()
+;(async () => {
+	await mongoose.connect(
+		`mongodb+srv://${process.env.CLUSTER_USER}:${process.env.CLUSTER_PASSWORD}@${process.env.CLUSTER}/finances4u`
+	)
+	console.log('Mongo connected!')
 
+	if (!module.parent) {
+		app.listen(3000)
+		console.log('Express started on port 3000')
+	}
+})()
 
-app.get('/', function(req:any, res:any){
-  res.send('Hello!');
-});
-
-app.get('/users', function(req:any, res:any){
-  res.send(users);
-});
-
-app.get('/users/:userId', function(req:any, res:any){
-  const user = users.filter((user) => user.id == req.params.userId);
-  res.send(user);
-});
-
-if (!module.parent) {
-  app.listen(3000);
-  console.log('Express started on port 3000');
-}
-
-export default app;
+export default app
