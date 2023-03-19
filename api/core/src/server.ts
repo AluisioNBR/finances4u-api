@@ -9,9 +9,7 @@ app.use('', SignController)
 
 config()
 ;(async () => {
-	await mongoose.connect(
-		`mongodb+srv://${process.env.CLUSTER_USER}:${process.env.CLUSTER_PASSWORD}@${process.env.CLUSTER}/finances4u`
-	)
+	await mongoose.connect(`${process.env.CLUSTER}`)
 	console.log('Mongo connected!')
 
 	if (!module.parent) {
