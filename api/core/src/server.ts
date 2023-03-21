@@ -1,11 +1,23 @@
 import { config } from 'dotenv'
 import express from 'express'
 import mongoose from 'mongoose'
+import { BlocksController } from './controllers/blocks.controller'
+import { GoalsController } from './controllers/goals.controller'
 import { SignController } from './controllers/sign.controller'
+import { SupportController } from './controllers/support.controller'
+import { TransactionsController } from './controllers/transactions.controller'
+import { UserController } from './controllers/user.controller'
 
 var app = express()
 
+app.use(express.json())
+app.use(express.urlencoded())
 app.use('', SignController)
+app.use('', UserController)
+app.use('', BlocksController)
+app.use('', GoalsController)
+app.use('', TransactionsController)
+app.use('', SupportController)
 
 config()
 ;(async () => {
@@ -13,8 +25,9 @@ config()
 	console.log('Mongo connected!')
 
 	if (!module.parent) {
-		app.listen(3000)
-		console.log('Express started on port 3000')
+		const port = 3000
+		app.listen(port)
+		console.log(`Express started on port ${port}`)
 	}
 })()
 

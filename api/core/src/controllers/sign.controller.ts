@@ -1,18 +1,18 @@
-import express, { Request, Response } from 'express'
+import { Request, Response, Router } from 'express'
 import { SignService } from '../services/sign.service'
 
-const SignController = express.Router()
+const SignController = Router()
 const service = new SignService()
 
 SignController.post('/signin', async (req: Request, res: Response) => {
 	const { username, password } = req.query
 	try {
-		res.statusCode = 201
+		res.statusCode = 202
 		return res.json(
 			await service.signIn(username as string, password as string)
 		)
 	} catch (error) {
-		res.statusCode = 404
+		res.sendStatus(404)
 	}
 })
 
@@ -28,7 +28,7 @@ SignController.post('/signup', async (req: Request, res: Response) => {
 			)
 		)
 	} catch (error) {
-		res.statusCode = 400
+		res.sendStatus(400)
 	}
 })
 
