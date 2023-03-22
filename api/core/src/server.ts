@@ -8,12 +8,15 @@ import { SignController } from './controllers/sign.controller'
 import { SupportController } from './controllers/support.controller'
 import { TransactionsController } from './controllers/transactions.controller'
 import { UserController } from './controllers/user.controller'
+import { CorsMiddleware } from './middlewares/cors.middleware'
 
 var app = express()
 
 app.use(express.json())
 app.use(express.urlencoded())
 app.use(cors())
+app.use(CorsMiddleware)
+
 app.use('', SignController)
 app.use('', UserController)
 app.use('', BlocksController)
