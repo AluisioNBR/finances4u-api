@@ -1,3 +1,4 @@
+import cors from 'cors'
 import { config } from 'dotenv'
 import express from 'express'
 import mongoose from 'mongoose'
@@ -12,6 +13,7 @@ var app = express()
 
 app.use(express.json())
 app.use(express.urlencoded())
+app.use(cors())
 app.use('', SignController)
 app.use('', UserController)
 app.use('', BlocksController)
