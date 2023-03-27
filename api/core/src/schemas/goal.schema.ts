@@ -9,7 +9,7 @@ export const GoalSchema = new Schema({
 
 	incrementRate: { required: true, type: Number },
 
-	goalPic: { type: Buffer, default: '' },
+	goalPic: { type: String, default: '' },
 
 	owner: { required: true, type: mongoose.Schema.Types.ObjectId, ref: 'user' },
 })

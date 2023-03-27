@@ -7,7 +7,7 @@ export const UserSchema = new Schema({
 
 	password: { required: true, type: String },
 
-	profilePic: { type: Buffer, default: '' },
+	profilePic: { type: String, default: '' },
 
 	balance: { type: Number, required: true, default: 0 },
 
