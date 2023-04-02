@@ -30,7 +30,7 @@ GoalsController.post(
 	}
 )
 
-GoalsController.post(
+GoalsController.patch(
 	'/user/:userId/goals/:goalId/goalPic',
 	upload.single('file'),
 	async (req: Request, res: Response) => {
