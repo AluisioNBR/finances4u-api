@@ -101,7 +101,16 @@ export class GoalsService {
 		userId: mongoose.Schema.Types.ObjectId,
 		goalId: mongoose.Schema.Types.ObjectId
 	) {
-		return await GoalModel.findOneAndDelete({ owner: userId, _id: goalId })
+		const goalDeleted = await GoalModel.findOneAndDelete({
+			owner: userId,
+			_id: goalId,
+		})
+		console.log(goalDeleted)
+		await UserModel.findByIdAndUpdate(userId, {
+			// @ts-ignore
+			$inc: { incrementRateAvailable: goalDeleted.incrementRate },
+		})
+		return goalDeleted
 	}
 
 	async deleteAllGoals(userId: mongoose.Schema.Types.ObjectId) {
