@@ -16,7 +16,7 @@ export class TransactionsService {
 			userId,
 			{
 				$inc: {
-					balance: type == 'Income' ? value : 0,
+					balance: type == 'Income' ? value : value * -1,
 					incomes: type == 'Income' ? value : 0,
 					expenses: type == 'Expense' ? value : 0,
 				},
